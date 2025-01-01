@@ -6,7 +6,6 @@ const App = () => {
   const [editIndex, setEditIndex] = useState(undefined);
   const formRef = useRef();
 
-  // Fetch notes from the server when the component mounts
   useEffect(() => {
     const fetchNotes = async () => {
       try {
@@ -20,12 +19,10 @@ const App = () => {
     fetchNotes();
   }, []);
 
-  // Handle form submit for both add and edit actions
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async (formData) => {
 
-    const title = formRef.current.elements.title.value;
-    const description = formRef.current.elements.description.value;
+    const title = formData.get("title");
+    const description = formData.get("description");
 
     if (editIndex !== undefined) {
       try {
@@ -96,7 +93,7 @@ const App = () => {
       <div className="flex items-center justify-center">
         <form
           ref={formRef}
-          onSubmit={handleSubmit}
+          action={handleSubmit}
           className="mt-5 flex items-center flex-col gap-2"
         >
           <input
@@ -138,3 +135,5 @@ const App = () => {
 };
 
 export default App;
+
+
